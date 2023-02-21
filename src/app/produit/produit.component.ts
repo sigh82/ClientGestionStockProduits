@@ -1,9 +1,10 @@
 import { ProduitService } from './produit.service';
-import { Produit } from './../shared/produit';
+import { IProduit, Produit } from './../shared/produit';
 import { ProduitMockSevice } from './produit.mock.service';
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector : 'app-produit',
@@ -13,13 +14,13 @@ import { ActivatedRoute } from '@angular/router';
 
 export class ProduitComponent implements OnInit{
 
-  produits: Produit[] = [];
+  produits: IProduit[] = [];
 
   produitForm!: FormGroup;
 
   operation : string = 'add';
 
-  selectedProduit!: Produit;
+  selectedProduit!: IProduit;
 
   constructor(private fb : FormBuilder, private produitService : ProduitService, private route : ActivatedRoute){
     this.createForm();
@@ -48,9 +49,13 @@ export class ProduitComponent implements OnInit{
   addProduit() {
     const p = this.produitForm.value;
     this.produitService.addProduit(p).subscribe(
-      res => {
+      (res : IProduit) => {
+        console.log(res);
         this.createForm();
         this.loadProduits();
+      },
+      (error: HttpErrorResponse) => {
+        window.alert("No Product found");
       }
     );
   }
