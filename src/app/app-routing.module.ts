@@ -4,18 +4,39 @@ import { Produit } from './shared/produit';
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { ProduitResolver } from './produit/produit.roselver';
+import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './home/home.component';
 
 
 export const appRoutes: Routes = [
   {
-    path: 'produit',
-    component: ProduitComponent,
-    resolve: {
-      produits: ProduitResolver
-    }
+    path: 'login',
+    component: LoginComponent
   },
-  {path: 'dashboard', component: DashboardComponent},
-  {path:'', redirectTo:'/dashboard', pathMatch:'full'}
+  {
+    path: 'home',
+    component: HomeComponent,
+    children: [
+      {
+        path: 'produit',
+        component: ProduitComponent,
+        resolve: {
+          produits: ProduitResolver
+        },
+        outlet: 'contentOutlet'
+      },
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        outlet: 'contentOutlet'
+      },
+    ]
+  },
+  {
+    path:'',
+    redirectTo:'/home',
+    pathMatch:'full'
+  }
 ];
 
 @NgModule({

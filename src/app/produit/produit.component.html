@@ -16,7 +16,7 @@
             <td>{{produit.ref}}</td><td>{{produit.quantite}}</td><td>{{produit.prixUnitaire}}</td>
             <td>
               <button class="btn btn-outline-primary" (click)="operation = 'edit'; selectedProduit = produit;">Edit</button>
-              <button class="btn btn-outline-danger" (click)="operation = 'remouve';">Remove</button>
+              <button class="btn btn-outline-danger" (click)="operation = 'remove';">Remove</button>
             </td>
           </tr>
         </tbody>
@@ -27,7 +27,7 @@
         <div class="card-head bg-info text-white">
           {{operation == 'add'?"Ajouter un produit":
             operation == 'edit'?"Modifier un roduit":
-            operation == 'remouve'?"Supprimerun produit": ''}}
+            operation == 'remove'?"Supprimerun produit": ''}}
         </div>
         <div class="card-body">
           <div>
@@ -53,14 +53,14 @@
               </button>
             </form>
           </div>
-          <div *ngIf="operation == 'remouve'">
+          <div *ngIf="operation == 'remove'">
             <p class="card-title">
-              Référence : {{selectedProduit.ref}}
+              Id : {{selectedProduit.id}}
             </p>
             <p>
               Vous voulez supprimer ce produit ?
             </p>
-            <button class="btn btn-success" [disabled]="!selectedProduit.ref" (click)="deleteProduit()">Confirmer</button>
+            <button class="btn btn-success" [disabled]="!selectedProduit.id" (click)="deleteProduit()">Confirmer</button>
           </div>
 
         </div>
