@@ -11,14 +11,14 @@ export class AppService {
 
   constructor( private http :  HttpClient, private cookieService : CookieService) { }
 
-  authenticate(credentials: { username: string; password: string; }, callback: () => any){
+  authenticate(credentials: { username: string; password: string; }, callback: { (): void; (): any; }){
     if(credentials){
 
-      const token = btoa(credentials.username + ':' +credentials.password);
+      const token = btoa(credentials.username+ ':' +credentials.password);
 
       this.cookieService.set('token',token);
 
-      this.http.get<any>(API_URLS.USER_URL).subscribe(
+      this.http.get<any>(API_URLS.USER_URL, { withCredentials: true }).subscribe(
         (response)  => {
         if(response && response['name']){
           this.authenticated = true;

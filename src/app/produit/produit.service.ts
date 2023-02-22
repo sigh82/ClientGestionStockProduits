@@ -18,7 +18,7 @@ export class ProduitService{
   }
 
   addProduit(produit: IProduit) : Observable<IProduit>{
-    return this.http.post<IProduit>(`http://localhost:8080/api/produit`, produit);
+    return this.http.post<IProduit>(API_URLS.PRODUIT_URL, produit);
   }
 
   updateProduit(produit: IProduit) : Observable<any>{
