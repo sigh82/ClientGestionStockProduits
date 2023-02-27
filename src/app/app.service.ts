@@ -21,6 +21,7 @@ export class AppService {
       this.http.get<any>(API_URLS.USER_URL, { withCredentials: true }).subscribe(
         (response)  => {
         if(response && response['name']){
+          console.log(response);
           this.authenticated = true;
         } else{
           this.authenticated = false;
